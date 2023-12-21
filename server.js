@@ -30,7 +30,12 @@ app.get("/", (req, res) => {
     res.send(`It is alive`)
 })
 
+
 //New - GET for the form to create a new book
+app.get("/books/new", (req, res) => {
+    res.render("new.ejs")
+})
+
 
 // Create - POST
 app.post("/books", async (req, res) => {
