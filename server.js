@@ -25,9 +25,15 @@ app.use(express.urlencoded({ extended: true })) // body parser this is how we ge
 
 //ROUTES
 
-//Index - GET render all of the books
-app.get("/", (req, res) => {
-    res.send(`It is alive`)
+// Index - GET render all of the books
+app.get("/books", async (req, res) => {
+    // find all of the books
+    let books = await Book.find({})
+
+    // render all of the books to index.ejs
+    res.render("index.ejs", {
+        books: books.reverse()
+    })
 })
 
 
