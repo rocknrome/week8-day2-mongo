@@ -55,7 +55,7 @@ app.post("/books", async (req, res) => {
         }
 
         let newBook = await Book.create(req.body)
-        res.send(newBook)
+        res.redirect("/books")
 
     } catch (err) {
         res.send(err)
