@@ -32,19 +32,23 @@ app.get("/", (req, res) => {
 
 //New - GET for the form to create a new book
 
-//Create-POST
+// Create - POST
 app.post("/books", async (req, res) => {
-    //res.send(req.body)    //initial setting
-    if (req.body.completed === "on") {
-        // if checked
-        req.body.completed = true
-    } else {
-        // if not checked
-        req.body.completed = false
+    try {
+        if (req.body.completed === "on") {
+            // if checked
+            req.body.completed = true
+        } else {
+            // if not checked
+            req.body.completed = false
+        }
+
+        let newBook = await Book.create(req.body)
+        res.send(newBook)
+
+    } catch (err) {
+        res.send(err)
     }
-    //res.send(req.body)
-    let newBook = await Book.create(req.body)
-    res.send(newBook)
 })
 
 //Show - GET rendering only one book
