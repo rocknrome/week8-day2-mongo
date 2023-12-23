@@ -94,7 +94,18 @@ app.get("/books/edit/:id", async (req, res) => {
 
 
 //Update route
+app.put("/books/:id", async (req, res) => {
+    //handle checkbox logic
+    if (req.body.completed === "on") {
+        req.body.completed = true
+    }   else {
+        req.body.completed = false
+    }
+    res.send(req.body)
+    //find by id and update
 
+    //back to show page
+})
 
 
 //Show - GET rendering only one book *** SHOW
