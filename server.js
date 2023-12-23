@@ -79,24 +79,21 @@ app.delete("/books/:id", async (req, res) => {
 })
 
 
-
-//Update route
-
-
-
-
 //Edit route
 app.get("/books/edit/:id", async (req, res) => {
     try {
         // find the book to edit
         let foundBook = await Book.findById(req.params.id)
-        res.render("edit", {
+        res.render("edit.ejs", {
             book: foundBook
         })
     } catch (error) {
         res.send("hello from the error")
     }
 })
+
+
+//Update route
 
 
 
