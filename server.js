@@ -95,16 +95,24 @@ app.get("/books/edit/:id", async (req, res) => {
 
 //Update route
 app.put("/books/:id", async (req, res) => {
-    //handle checkbox logic
+    // handle our checkbox
     if (req.body.completed === "on") {
         req.body.completed = true
-    }   else {
+    } else {
         req.body.completed = false
     }
-    res.send(req.body)
-    //find by id and update
+    // Then find by id and update with the req.body
+    // findByIdAndUpdate - id , data to update, options
+    let updatedBook = await Book.findByIdAndUpdate(
+        req.params.id,
+        req.body,
+        {
+            new: true
+        }
+    )
 
-    //back to show page
+    // redirect to the show route with the updated book
+    res.redirect(`/books/${updatedBook._id}`)
 })
 
 
