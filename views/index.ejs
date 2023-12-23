@@ -12,6 +12,10 @@
                 <%= books[i].title %>
             </a>
             <p>click title to see more</p>
+            <!-- Link to our edit page -->
+            <a href="/books/edit/<%= books[i]._id %>/">Edit <%= books[i].title %></a>
+            <br>
+            <!--Link to delete a book-->
             <form action="/books/<%= books[i]._id%>/?_method=DELETE" method="post">
                 <input type="submit" value="Remove Book">
             </form>

@@ -86,11 +86,21 @@ app.delete("/books/:id", async (req, res) => {
 
 
 //Edit route
+app.get("/books/edit/:id", async (req, res) => {
+    try {
+        // find the book to edit
+        let foundBook = await Book.findById(req.params.id)
+        res.render("edit", {
+            book: foundBook
+        })
+    } catch (error) {
+        res.send("hello from the error")
+    }
+})
 
 
 
-
-//Show - GET rendering only one book    SHOW
+//Show - GET rendering only one book *** SHOW
 app.get("/books/:id", async (req, res) => {
     // find a book by _id
     let foundBook = await Book.findById(req.params.id) // the request params object
