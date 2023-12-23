@@ -93,28 +93,80 @@ app.get("/books/edit/:id", async (req, res) => {
 })
 
 
-//Update route
+//UPDATE Route
 app.put("/books/:id", async (req, res) => {
-    // handle our checkbox
-    if (req.body.completed === "on") {
-        req.body.completed = true
-    } else {
-        req.body.completed = false
-    }
-    // Then find by id and update with the req.body
-    // findByIdAndUpdate - id , data to update, options
-    let updatedBook = await Book.findByIdAndUpdate(
-        req.params.id,
-        req.body,
-        {
-            new: true
-        }
-    )
 
-    // redirect to the show route with the updated book
-    res.redirect(`/books/${updatedBook._id}`)
+    try {
+        // handle our checkbox
+        if (req.body.completed === "on") {
+            req.body.completed = true
+        } else {
+            req.body.completed = false
+        }
+        // Then find by id and update with the req.body
+        // findByIdAndUpdate - id , data to update, options
+        let updatedBook = await Book.findByIdAndUpdate(
+            req.params.id,
+            req.body,
+            {
+                new: true
+            }
+        )
+
+        // redirect to the show route with the updated book
+        res.redirect(`/books/${updatedBook._id}`)
+
+    } catch (error) {
+        res.send("something went wrong in this route")
+    }
 })
 
+//SEED ROUTE / DEFAULT / ROUTE
+app.get("/books/seed", async (req, res) => {
+    try {
+        // delete everything in the database
+        await Book.deleteMany({})
+        // Create data in the database
+        await Book.create(
+            [
+                {
+                  title: "Cracking the Coding Interview",
+                  author: "Gayle Laakmann McDowell",
+                },
+                {
+                  title: "HTML and CSS: Design and Build Websites",
+                  author: "Jon Duckett",
+                },
+                {
+                  title: "JavaScript and JQuery: Interactive Front-End Web Development ",
+                  author: "jon Duckett",
+                },
+                {
+                  title: "You Don't Know JS Yet",
+                  author: "Kyle Simpson",
+                },
+                {
+                  title:
+                    "Design Patterns: Elements of Reusable Object-Oriented Software ",
+                  author: "Erich Gamma",
+                },
+                {
+                  title: "Frontend Unicorn",
+                  author:
+                    "Michał Malewicz, Szymon Adamiak, Albert Pawłowski, and Albert Walicki",
+                },
+                {
+                  title: "Don't Make Me Think",
+                  author: "Steve Krug",
+                },
+              ]
+        )
+        // redirect back to the index
+        res.redirect("/books")
+    } catch (error) {
+        res.send("something went wrong with your seeds")
+    }
+})
 
 //Show - GET rendering only one book *** SHOW
 app.get("/books/:id", async (req, res) => {
