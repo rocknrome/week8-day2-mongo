@@ -62,7 +62,30 @@ app.post("/books", async (req, res) => {
     }
 })
 
-//Show - GET rendering only one book
+//Delete route
+app.delete("/books/:id", async (req, res)=>{
+    try {
+        //find a book and delete it
+        let deletedBook = await Book.findByIdAndDelete(req.params.id)
+        //redirtect back to Index
+        res.redirect("/books")
+    } catch (error) {
+    res.status(500).send("something went wrong when deleting")
+}
+
+})
+
+
+
+//Update route
+
+
+//Edit route
+
+
+
+
+//Show - GET rendering only one book    SHOW
 app.get("/books/:id", async (req, res) => {
     // find a book by _id
     let foundBook = await Book.findById(req.params.id) // the request params object
