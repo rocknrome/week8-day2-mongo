@@ -7,6 +7,7 @@ require("./config/db")  //bring our db connection
 
 const express = require("express");
 const morgan = require("morgan");
+const methodOverride = require("method-override");  //added DELETE capability
 
 
 const app = express();
@@ -21,6 +22,7 @@ const Book = require("./models/book");
 //MIDDLEWARE
 app.use(morgan("dev")) // logging
 app.use(express.urlencoded({ extended: true })) // body parser this is how we get access to req.body
+app.use(methodOverride("_method"))  //lets us use DELETE PUT HTTP verbs
 
 
 //ROUTES
@@ -62,22 +64,25 @@ app.post("/books", async (req, res) => {
     }
 })
 
+
 //Delete route
-app.delete("/books/:id", async (req, res)=>{
+app.delete("/books/:id", async (req, res) => {
     try {
-        //find a book and delete it
+        // Find a book and then delete
         let deletedBook = await Book.findByIdAndDelete(req.params.id)
-        //redirtect back to Index
+        console.log(deletedBook)
+        // redirect back to the index
         res.redirect("/books")
     } catch (error) {
-    res.status(500).send("something went wrong when deleting")
-}
-
+        res.status(500).send("something went wrong when deleting")
+    }
 })
 
 
 
 //Update route
+
+
 
 
 //Edit route
